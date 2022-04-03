@@ -1,6 +1,7 @@
 package com.interseguro.proyect.soft.controllers;
 
 import com.interseguro.proyect.soft.DTO.EmpleadoDTO;
+import com.interseguro.proyect.soft.exception.v3.requestExceptions.BusinessException;
 import com.interseguro.proyect.soft.model.Empleado;
 import com.interseguro.proyect.soft.service.IEmpleadoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/talentfestapi")
@@ -28,7 +28,7 @@ public class EmpleadoRestController {
 
         //Validar Correo:
         if(result.hasErrors()){
-           String errorEmail = result.getFieldError("correo").getDefaultMessage();
+           String errorEmail = Objects.requireNonNull(result.getFieldError("correo")).getDefaultMessage();
            errors.add(errorEmail);
         }
 
@@ -51,8 +51,9 @@ public class EmpleadoRestController {
 
         //Verificar si hay errores:
         if(errors.size() > 0){
+            response.put("mensaje", "El request enviado tiene fallas");
             response.put("errores", errors);
-            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+            throw new BusinessException(response, HttpStatus.BAD_REQUEST);
         }
 
         Empleado empleadoSaved;
@@ -73,9 +74,11 @@ public class EmpleadoRestController {
 
 
     @GetMapping("/empleados")
-    public ResponseEntity<?> getEmpleados(){
+    public ResponseEntity<?> getEmpleados() {
         Map<String, Object> response = new HashMap<>();
         List<String> empleados;
+
+        //throw new NotFoundRException("No se encuentra el id = 100");
 
         try{
             empleados = empleadoService.getEmpleados();

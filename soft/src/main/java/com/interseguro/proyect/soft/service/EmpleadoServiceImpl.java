@@ -1,10 +1,14 @@
 package com.interseguro.proyect.soft.service;
 
 import com.interseguro.proyect.soft.DTO.EmpleadoDTO;
+import com.interseguro.proyect.soft.exception.v2.requestExceptions.NotFoundRException;
+import com.interseguro.proyect.soft.exception.v3.requestExceptions.BusinessException;
 import com.interseguro.proyect.soft.model.Empleado;
 import com.interseguro.proyect.soft.repository.EmpladoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.client.HttpClientErrorException;
 
 import java.time.DateTimeException;
@@ -83,10 +87,7 @@ public class EmpleadoServiceImpl implements IEmpleadoService{
 
     public boolean validarCategorias(String categoria) {
         List<String> categorias = List.of("A", "B", "C", "D");
-        if(categorias.contains(categoria)){
-            return true;
-        }
-        return false;
+        return categorias.contains(categoria);
     }
 
     @Override

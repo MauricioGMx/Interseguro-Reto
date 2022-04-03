@@ -1,6 +1,7 @@
 package com.interseguro.proyect.soft.service;
 
 import com.interseguro.proyect.soft.DTO.EmpleadoDTO;
+import com.interseguro.proyect.soft.exception.v2.requestExceptions.NotFoundRException;
 import com.interseguro.proyect.soft.model.Empleado;
 
 import java.util.List;

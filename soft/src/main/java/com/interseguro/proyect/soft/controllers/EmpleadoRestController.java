@@ -37,7 +37,7 @@ public class EmpleadoRestController {
             errors.add("La categoria ingresasa no es valida. ");
         }
 
-        //Validar Comepetencias:
+        //Validar Competencias:
         if(empleado.getConocimientos().size() != 0){
             if(empleado.getConocimientos().size() > 10){
                 errors.add("El tamaño maximo de competencias es 10. ");
